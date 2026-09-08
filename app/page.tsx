@@ -1,55 +1,58 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 
 const products = [
   {
     name: "Beras",
     variant: "Pandan wangi, premium, medium",
-    image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/beras.jpg",
     span: "md:col-span-2",
   },
   {
     name: "Gula Pasir",
     variant: "Gula kristal putih, kemasan karung dan repack",
-    image: "https://images.unsplash.com/photo-1634612831148-03a8550e1d52?auto=format&fit=crop&w=800&q=80",
+    image: "/gula.jpg",
     span: "",
   },
   {
     name: "Tepung Terigu",
     variant: "Serbaguna & bakery, kemasan 1–25kg",
-    image: "https://images.unsplash.com/photo-1627735483792-233bf632619b?auto=format&fit=crop&w=800&q=80",
+    image: "/tepung.jpg",
     span: "md:row-span-2",
   },
   {
     name: "Minyak Goreng Pouch",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu7fSJ6w34ScAJR9Y6RjCEnBlQMTKrHUDKtcjwszBi8ExRpR3M0wPkFqe6&s=10",
+    image: "/minyak-pouch.png",
     span: "",
   },
   {
     name: "Minyak Goreng Botol",
-    image: "https://www.mbizmarket.co.id/news/wp-content/uploads/2022/11/mencari-distributor-minyak-goreng.png",
+    image: "/minyak-botol.png",
     span: "",
   },
   {
     name: "Minyak Goreng Curah",
     variant: "DMO & Non-DMO, CP 10 & CP 8",
-    image: "https://svc-silinda.jabarprov.go.id/assets/public/image/commodities/77f19c7b-d533-41d6-98a9-1bf9832901fe.png",
+    image: "/minyak-curah.png",
     span: "",
   },
   {
     name: "Gas Elpiji 3kg",
-    image: "https://infobanknews.com/wp-content/uploads/2022/04/LPG-Gas.jpeg",
+    image: "/gas-3kg.jpg",
     span: "",
   },
   {
     name: "Gas Elpiji 5.5kg & 12kg",
-    image: "https://images.unsplash.com/photo-1644217209694-5ca176114adb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/gas-12kg.jpg",
     span: "",
   },
   {
     name: "Kopi",
-    image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1061&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image: "/kopi.jpg",
     span: "md:col-span-2",
   },
 ];  
@@ -105,14 +108,16 @@ function ProductCard({
     <div
       ref={ref}
       style={{ transitionDelay: `${(index % 4) * 90}ms` }}
-      className={`group relative overflow-hidden rounded-lg ${item.span} ${revealCls(
+      className={`group relative h-64 overflow-hidden rounded-lg md:h-full ${item.span} ${revealCls(
         inView
       )}`}
     >
-      <img
+      <Image
         src={item.image}
         alt={item.name}
-        className="h-64 md:h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.06]"
+        fill
+        sizes="(min-width: 768px) 25vw, (min-width: 640px) 50vw, 100vw"
+        className="object-cover transition duration-700 ease-out group-hover:scale-[1.06]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#143D2B]/90 via-[#143D2B]/10 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
@@ -132,6 +137,7 @@ function ProductCard({
 export default function Home() {
   const [navbarOpacity, setNavbarOpacity] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const scrolled = navbarOpacity > 0.2;
   const scrollToHero = () => {
     window.scrollTo({
       top: 0,
@@ -188,51 +194,93 @@ export default function Home() {
     <main className="bg-[#F8F7F3] text-gray-800">
       {/* ====== NAVBAR ====== */}
       <header
-        className="fixed top-0 left-0 z-50 w-full transition-[box-shadow] duration-300"
+        className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
+          scrolled ? "border-b border-gray-100" : ""
+        }`}
         style={{
-          backgroundColor: `rgba(15, 81, 50, ${navbarOpacity * 0.92})`,
+          backgroundColor: `rgba(255, 255, 255, ${navbarOpacity * 0.92})`,
           backdropFilter: `blur(${navbarOpacity * 12}px)`,
           WebkitBackdropFilter: `blur(${navbarOpacity * 12}px)`,
           boxShadow:
-            navbarOpacity > 0.2 ? "0 2px 12px rgba(0,0,0,0.08)" : "none",
+            navbarOpacity > 0.2 ? "0 2px 16px rgba(0,0,0,0.06)" : "none",
         }}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-8">          
           <button
             type="button"
             onClick={scrollToHero}
-            className="flex h-full items-center text-sm font-bold tracking-wide text-white transition-colors duration-300 md:text-base"
+            className="flex h-full items-center gap-3 text-sm font-bold tracking-wide transition-colors duration-300 md:text-base"
           >
-            PT UNITY PANGAN INVESTAMA
+            <Image
+              src="/logo-icon.png"
+              alt="Logo PT Unity Pangan Investama"
+              width={36}
+              height={36}
+              className="h-9 w-9 object-contain"
+              priority
+            />
+            <span
+              className={`bg-clip-text text-transparent transition-colors duration-300 ${
+                scrolled
+                  ? "bg-gradient-to-b from-[#C7A35A] via-[#A98A3F] to-[#8F6F2E]"
+                  : "bg-gradient-to-b from-[#FDE280] via-[#E7C873] to-[#D2A94E]"
+              }`}
+            >
+              UNITY PANGAN INVESTAMA
+            </span>
           </button>
 
-          <nav className="hidden gap-8 text-sm md:flex">
-            {[
-              ["Tentang Kami", "#tentang"],
-              ["Visi & Misi", "#visimisi"],
-              ["Produk", "#produk"],
-              ["Kontak", "#kontak"],
-            ].map(([label, href]) => (
-              <a
-                key={href}
-                href={href}
-                className="group relative py-2 text-white/90 transition-colors duration-300 hover:text-[#E7C873]"
-              >
-                {label}
+          <div className="hidden items-center gap-6 md:flex">
+            <nav className="flex gap-8 text-sm">
+              {[
+                ["Tentang Kami", "#tentang"],
+                ["Visi & Misi", "#visimisi"],
+                ["Produk", "#produk"],
+                ["Kontak", "#kontak"],
+              ].map(([label, href]) => (
+                <a
+                  key={href}
+                  href={href}
+                  className={`group relative py-2 transition-colors duration-300 ${
+                    scrolled
+                      ? "text-gray-700 hover:text-[#A98A3F]"
+                      : "text-white/90 hover:text-[#E7C873]"
+                  }`}
+                >
+                  {label}
 
-                <span className="absolute bottom-0 left-1/2 h-px w-0 -translate-x-1/2 bg-[#E7C873] transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
-          </nav>
+                  <span
+                    className={`absolute bottom-0 left-1/2 h-px w-0 -translate-x-1/2 transition-all duration-300 group-hover:w-full ${
+                      scrolled ? "bg-[#A98A3F]" : "bg-[#E7C873]"
+                    }`}
+                  />
+                </a>
+              ))}
+            </nav>
+
+            <Link
+              href="/coming-soon"
+              className={`group relative rounded-full border px-5 py-2 text-sm font-semibold transition-colors duration-300 ${
+                scrolled
+                  ? "border-[#C7A35A] bg-[#d2ad5c] text-[#173c2a] hover:bg-[#e1c77f]"
+                  : "border-[#E7C873]/70 bg-[#d2ad5c] text-[#173c2a] hover:bg-[#e1c77f]"
+              }`}
+            >
+              Mulai Investasi
+            </Link>
+          </div>
         </div>
       </header>
 
       {/* ===== HERO ===== */}      
       <section className="relative flex min-h-screen items-end overflow-hidden bg-[#163c2a]">                
-        <img
-          src="https://images.unsplash.com/photo-1730697897539-16a87a38be69?q=80&w=2000&auto=format&fit=crop"
+        <Image
+          src="/hero.jpg"
           alt="Unity Pangan Investama"
-          className={`absolute inset-0 h-full w-full object-cover transition-transform duration-[1600ms] ease-out ${
+          fill
+          priority
+          sizes="100vw"
+          className={`object-cover transition-transform duration-[1600ms] ease-out ${
             mounted ? "scale-100" : "scale-110"
           }`}
         />
@@ -265,7 +313,7 @@ export default function Home() {
             </h1>
 
             <p
-              className={`mt-8 max-w-2xl text-lg leading-8 text-white/75 transition-all duration-700 ease-out ${
+              className={`mt-8 max-w-2xl text-base lg:text-lg leading-8 text-white/75 transition-all duration-700 ease-out ${
                 mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
               style={{ transitionDelay: "240ms" }}
@@ -274,15 +322,27 @@ export default function Home() {
               untuk pasar nasional maupun internasional.
             </p>
 
-            <a
-              href="#tentang"
-              className={`mt-10 inline-flex items-center gap-3 rounded-full bg-[#d2ad5c] px-7 py-3.5 text-sm font-semibold text-[#173c2a] transition-all duration-700 ease-out hover:bg-[#e1c77f] ${
+            <div
+              className={`mt-10 flex flex-wrap items-center gap-4 transition-all duration-700 ease-out ${
                 mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
               }`}
             >
-              Tentang Kami
-              <span>↓</span>
-            </a>
+              <Link
+                href="/coming-soon"
+                className="group inline-flex min-w-52 items-center justify-center gap-3 rounded-full bg-[#d2ad5c] px-10 py-3.5 text-sm font-semibold text-[#173c2a] transition-colors duration-300 hover:bg-[#e1c77f]"
+              >
+                Mulai Investasi
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+
+              <a
+                href="#tentang"
+                className="group inline-flex items-center gap-3 rounded-full border border-white/30 px-7 py-3.5 text-sm font-semibold text-white transition-colors duration-300 hover:border-[#d2ad5c] hover:bg-white/10 hover:text-[#e1c77f]"
+              >
+                Tentang Kami
+                <ArrowDown className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -330,12 +390,14 @@ export default function Home() {
           <div
             ref={tentangImgRef}
             style={{ transitionDelay: "120ms" }}
-            className={`relative ${revealCls(tentangImgIn)}`}
+            className={`relative h-[500px] ${revealCls(tentangImgIn)}`}
           >
-            <img
-              src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1200&auto=format&fit=crop"
+            <Image
+              src="/gudang.jpg"
               alt="Warehouse"
-              className="h-[500px] w-full rounded-3xl object-cover shadow-xl"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="rounded-3xl object-cover shadow-xl"
             />
 
             <div className="absolute bottom-6 left-6 max-w-xs rounded-2xl bg-white p-6 shadow-lg">
@@ -353,8 +415,42 @@ export default function Home() {
       </section>
 
       {/* ===== VISI & MISI ===== */}
-      <section id="visimisi" className="scroll-mt-8 bg-[#0F5132] py-20">
-        <div className="mx-auto max-w-6xl px-8">
+      <section
+        id="visimisi"
+        className="relative scroll-mt-8 overflow-hidden bg-[#0F5132] py-20"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-[#092318] via-[#0F5132]/95 to-[#173c2a]/90" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(255,255,255,0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.35) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#071d14] to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(115deg, rgba(255,255,255,0.05) 0%, transparent 32%)",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(70% 60% at 85% 0%, rgba(231,200,115,0.10), transparent 70%)",
+          }}
+        />
+
+        <div className="relative mx-auto max-w-6xl px-8">
           <div ref={visimisiTitleRef} className={`mb-16 ${revealCls(visimisiTitleIn)}`}>
             <h2 className="text-center text-3xl font-bold tracking-[0.18em] text-white md:text-4xl">
               VISI & MISI PERUSAHAAN
@@ -480,13 +576,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mx-auto pt-16 max-w-7xl">
-          <h2
-            ref={lokasiTitleRef}
-            className={`text-center text-3xl font-bold tracking-[0.18em] text-[#143D2B] md:text-4xl ${revealCls(
-              lokasiTitleIn
-            )}`}
-          >
+        <div ref={lokasiTitleRef} className={`mx-auto pt-16 max-w-7xl ${revealCls(lokasiTitleIn)}`}>
+          <h2 className={"text-center text-3xl font-bold tracking-[0.18em] text-[#143D2B] md:text-4xl"}>
             LOKASI PENYIMPANAN
           </h2>
           <div className="mx-auto mt-5 mb-8 h-1 w-20 bg-[#C7A35A]" />
@@ -494,12 +585,49 @@ export default function Home() {
           <div className="mx-auto grid gap-6 px-8 sm:grid-cols-2">
             <div
               ref={lokasi1Ref}
-              className={`flex items-center gap-6 rounded-xl bg-[#143D2B] px-10 py-10 ${revealCls(
+              className={`relative flex items-center gap-6 overflow-hidden rounded-xl px-10 py-10 shadow-lg shadow-[#0b3a27]/20 ring-1 ring-white/10 ${revealCls(
                 lokasi1In
               )}`}
-            >
-              <span className="text-6xl font-extrabold text-white/10">01</span>
-              <div>
+              style={{
+                background:
+                  "linear-gradient(160deg, #1a5238 0%, #0F5132 55%, #0d452f 100%)",
+              }}
+            >              
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(90% 90% at 100% 0%, rgba(231,200,115,0.28), transparent 55%)",
+                }}
+              />              
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(70% 70% at 100% 100%, rgba(45,212,191,0.12), transparent 60%)",
+                }}
+              />              
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(115deg, transparent 55%, rgba(255,255,255,0.06) 75%, transparent 90%)",
+                }}
+              />              
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(8,35,24,0.45) 0%, transparent 55%)",
+                }}
+              />
+
+              <span className="relative text-6xl font-extrabold text-white/10">01</span>
+              <div className="relative">
                 <h3 className="text-3xl font-bold text-white">Marunda</h3>
                 <p className="mt-2 text-sm text-white/60">Jakarta Utara</p>
               </div>
@@ -507,13 +635,50 @@ export default function Home() {
 
             <div
               ref={lokasi2Ref}
-              style={{ transitionDelay: "100ms" }}
-              className={`flex items-center gap-6 rounded-xl bg-[#143D2B] px-10 py-10 ${revealCls(
+              style={{
+                transitionDelay: "100ms",
+                background:
+                  "linear-gradient(160deg, #1a5238 0%, #0F5132 55%, #0d452f 100%)",
+              }}
+              className={`relative flex items-center gap-6 overflow-hidden rounded-xl px-10 py-10 shadow-lg shadow-[#0b3a27]/20 ring-1 ring-white/10 ${revealCls(
                 lokasi2In
               )}`}
-            >
-              <span className="text-6xl font-extrabold text-white/10">02</span>
-              <div>
+            >              
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(90% 90% at 100% 0%, rgba(231,200,115,0.28), transparent 55%)",
+                }}
+              />              
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(70% 70% at 100% 100%, rgba(45,212,191,0.12), transparent 60%)",
+                }}
+              />              
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(115deg, transparent 55%, rgba(255,255,255,0.06) 75%, transparent 90%)",
+                }}
+              />              
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90deg, rgba(8,35,24,0.45) 0%, transparent 55%)",
+                }}
+              />
+
+              <span className="relative text-6xl font-extrabold text-white/10">02</span>
+              <div className="relative">
                 <h3 className="text-3xl font-bold text-white">Tanjung Priuk</h3>
                 <p className="mt-2 text-sm text-white/60">Jakarta Utara</p>
               </div>
@@ -522,23 +687,64 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ====================================================== */}
-      {/* KONTAK */}
-      {/* ====================================================== */}
-      <section id="kontak" className="scroll-mt-8 bg-[#0F5132] pt-12 pb-6 text-white">
-        <div className="mx-auto max-w-7xl px-8">
-          <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
-            <div ref={kontakLeftRef} className={`flex items-center ${revealCls(kontakLeftIn)}`}>
-              <div className="w-fit">
-                <h2 className="text-4xl font-bold leading-[1.05] tracking-[0.08em] md:text-5xl">
-                  HUBUNGI
-                </h2>
+      {/* ====== KONTAK ===== */}
+      <section
+        id="kontak"
+        className="relative scroll-mt-8 overflow-hidden bg-[#0F5132] pt-12 pb-6 text-white"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-[#092318] via-[#0F5132]/95 to-[#173c2a]/90" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(255,255,255,0.35) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.35) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#071d14] to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(245deg, rgba(255,255,255,0.05) 0%, transparent 32%)",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(70% 60% at 15% 100%, rgba(231,200,115,0.10), transparent 70%)",
+          }}
+        />
 
-                <div className="mt-1 flex w-full items-center">
-                  <div className="mr-4 h-1 flex-1 bg-[#C7A35A]" />
-                  <h2 className="text-4xl font-bold leading-[1.05] tracking-[0.08em] md:text-5xl">
-                    KAMI
+        <div className="relative mx-auto max-w-7xl px-8">
+          <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr]">
+            <div ref={kontakLeftRef} className={`flex items-center justify-center text-center lg:justify-start lg:text-left ${revealCls(kontakLeftIn)}`}>
+              <div className="w-fit">
+                <div className="lg:hidden">
+                  <h2 className="text-4xl font-bold leading-[1.05] tracking-[0.18em] md:text-5xl">
+                    HUBUNGI KAMI
                   </h2>
+                  <div className="mx-auto mt-5 h-1 w-20 bg-[#C7A35A]" />
+                </div>
+
+                <div className="hidden lg:block">
+                  <h2 className="text-5xl font-bold leading-[1.05] tracking-[0.08em]">
+                    HUBUNGI
+                  </h2>
+
+                  <div className="mt-1 flex w-full items-center">
+                    <div className="mr-4 h-1 flex-1 bg-[#C7A35A]" />
+                    <h2 className="text-5xl font-bold leading-[1.05] tracking-[0.08em]">
+                      KAMI
+                    </h2>
+                  </div>
                 </div>
               </div>
             </div>
@@ -554,17 +760,7 @@ export default function Home() {
                 </p>
 
                 <p className="break-all text-[15px] leading-6 text-white/90">
-                  ptunitypanganinvestama@gmail.com
-                </p>
-              </div>
-
-              <div className="grid gap-3 py-5 sm:grid-cols-[120px_1fr] sm:gap-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#E7C873]">
-                  Telepon
-                </p>
-
-                <p className="text-[15px] leading-6 text-white/90">
-                  (021) 39833458
+                  Unity.pangan.investama@gmail.com
                 </p>
               </div>
 
@@ -592,8 +788,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-4 border-t border-white/15 pt-4 text-sm text-white/50 text-center">
-            © 2026 PT Unity Pangan Investama. All Rights Reserved.
+          <div className="mt-4 flex flex-col items-center gap-2 border-t border-white/15 pt-4 text-sm text-white/50 text-center sm:flex-row sm:justify-center sm:gap-2">
+            <span>© 2026 PT Unity Pangan Investama. All Rights Reserved.</span>
           </div>
         </div>
       </section>

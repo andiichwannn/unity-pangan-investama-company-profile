@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "PT Unity Pangan Investama",
   description: "Solusi investasi, perdagangan, dan distribusi komoditas",
+  icons: {
+    icon: "/logo-icon.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
