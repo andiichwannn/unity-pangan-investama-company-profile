@@ -770,7 +770,7 @@ export default function Home() {
                 </p>
 
                 <p className="text-[15px] leading-6 text-white/90">
-                  www.unitypanganinvestama.com
+                  www.unitypanganinvestama.co.id
                 </p>
               </div>
 
