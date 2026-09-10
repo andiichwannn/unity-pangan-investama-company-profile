@@ -10,58 +10,53 @@ const products = [
     name: "Beras",
     variant: "Pandan wangi, premium, medium",
     image: "/beras.jpg",
-    span: "md:col-span-2",
+    gridPos: { gridColumn: "1 / 3", gridRow: "1" },
   },
   {
     name: "Gula Pasir",
     variant: "Gula kristal putih, kemasan karung dan repack",
     image: "/gula.jpg",
-    span: "",
+    gridPos: { gridColumn: "3", gridRow: "1" },
   },
   {
     name: "Tepung Terigu",
     variant: "Serbaguna & bakery, kemasan 1–25kg",
     image: "/tepung.jpg",
-    span: "md:row-span-2",
+    gridPos: { gridColumn: "4", gridRow: "1 / 3" },
   },
   {
-    name: "Minyak Goreng Pouch",
-    image: "/minyak-pouch.png",
-    span: "",
+    name: "Kopi",
+    image: "/kopi.jpg",
+    gridPos: { gridColumn: "1", gridRow: "2 / 4" },
   },
   {
     name: "Minyak Goreng Botol",
     image: "/minyak-botol.png",
-    span: "",
+    gridPos: { gridColumn: "2", gridRow: "2" },
+  },
+  {
+    name: "Minyak Goreng Pouch",
+    image: "/minyak-pouch.png",
+    gridPos: { gridColumn: "3", gridRow: "2" },
   },
   {
     name: "Minyak Goreng Curah",
     variant: "DMO & Non-DMO, CP 10 & CP 8",
     image: "/minyak-curah.png",
-    span: "",
+    gridPos: { gridColumn: "2", gridRow: "3" },
   },
   {
-    name: "Gas Elpiji 3kg",
-    image: "/gas-3kg.jpg",
-    span: "",
+    name: "Gas Bumi",
+    image: "/gas.jpeg",
+    gridPos: { gridColumn: "3 / 5", gridRow: "3" },
   },
-  {
-    name: "Gas Elpiji 5.5kg & 12kg",
-    image: "/gas-12kg.jpg",
-    span: "",
-  },
-  {
-    name: "Kopi",
-    image: "/kopi.jpg",
-    span: "md:col-span-2",
-  },
-];  
+];
 
 type Product = {
   name: string;
   variant?: string;
   image: string;
-  span: string;
+  gridPos: { gridColumn: string; gridRow: string };
 };
 
 function useReveal(threshold = 0.15) {
@@ -107,8 +102,8 @@ function ProductCard({
   return (
     <div
       ref={ref}
-      style={{ transitionDelay: `${(index % 4) * 90}ms` }}
-      className={`group relative h-64 overflow-hidden rounded-lg md:h-full ${item.span} ${revealCls(
+      style={{ transitionDelay: `${(index % 4) * 90}ms`, ...item.gridPos }}
+      className={`group relative h-64 overflow-hidden rounded-lg md:h-full ${revealCls(
         inView
       )}`}
     >
@@ -119,13 +114,13 @@ function ProductCard({
         sizes="(min-width: 768px) 25vw, (min-width: 640px) 50vw, 100vw"
         className="object-cover transition duration-700 ease-out group-hover:scale-[1.06]"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#143D2B]/90 via-[#143D2B]/10 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-3 md:p-4">
         <h3 className="text-sm font-semibold leading-snug text-white md:text-base">
           {item.name}
         </h3>
         {item.variant && (
-          <p className="mt-0.5 text-[11px] text-white/70 md:text-xs">
+          <p className="mt-0.5 text-xs text-white/70 md:text-xs">
             {item.variant}
           </p>
         )}
@@ -759,7 +754,7 @@ export default function Home() {
                   Email
                 </p>
 
-                <p className="break-all text-[15px] leading-6 text-white/90">
+                <p className="break-all text-sm leading-6 text-white/90">
                   Unity.pangan.investama@gmail.com
                 </p>
               </div>
@@ -769,7 +764,7 @@ export default function Home() {
                   Website
                 </p>
 
-                <p className="text-[15px] leading-6 text-white/90">
+                <p className="text-sm leading-6 text-white/90">
                   www.unitypanganinvestama.co.id
                 </p>
               </div>
@@ -779,7 +774,7 @@ export default function Home() {
                   Alamat
                 </p>
 
-                <p className="max-w-2xl text-[15px] leading-7 text-white/90">
+                <p className="max-w-2xl text-sm leading-7 text-white/90">
                   Gedung Sarinah, Lt 12, Jl. MH. Thamrin No. 11 RT.08 RW.004,
                   Gondangdia, Menteng, Kota Administrasi Jakarta Pusat, DKI Jakarta,
                   Kode Pos 10350.
