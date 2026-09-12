@@ -1,7 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function ComingSoon() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const t = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(t);
+  }, []);
+
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0F5132] text-white">
       {/* Background layers */}
@@ -30,13 +40,22 @@ export default function ComingSoon() {
 
       {/* Content */}
       <section className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        <p className="mb-6 flex items-center justify-center gap-3 text-sm font-medium tracking-[0.22em] text-[#d2ad5c]">
+        <p
+          className={`mb-6 flex items-center justify-center gap-3 text-sm font-medium tracking-[0.22em] text-[#d2ad5c] transition-all duration-700 ease-out ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
           <span className="h-px w-10 bg-[#d2ad5c]" />
           STAY TUNED
           <span className="h-px w-10 bg-[#d2ad5c]" />
         </p>
 
-        <h1 className="text-6xl font-extrabold tracking-tight sm:text-8xl md:text-9xl">
+        <h1
+          className={`text-6xl font-extrabold tracking-tight transition-all duration-700 ease-out sm:text-8xl md:text-9xl ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+          style={{ transitionDelay: "120ms" }}
+        >
           <span className="bg-gradient-to-b from-white via-white to-white/60 bg-clip-text text-transparent">
             COMING
           </span>
@@ -46,13 +65,23 @@ export default function ComingSoon() {
           </span>
         </h1>
 
-        <p className="mx-auto mt-8 max-w-xl text-base leading-8 text-white/60 md:text-lg">
+        <p
+          className={`mx-auto mt-8 max-w-xl text-base leading-8 text-white/60 transition-all duration-700 ease-out md:text-lg ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+          style={{ transitionDelay: "240ms" }}
+        >
           Portal pemantauan investasi anda akan segera hadir. Pantau perkembangan
           investasi, distribusi komoditas, dan hasil kerja sama anda secara
           transparan dan real-time, kapan pun dan di mana pun.
         </p>
 
-        <div className="mt-12">
+        <div
+          className={`mt-12 transition-all duration-700 ease-out ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+          style={{ transitionDelay: "360ms" }}
+        >
           <Link
             href="/"
             className="group inline-flex items-center gap-3 rounded-full border border-white/25 px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-[#d2ad5c] hover:bg-white/10 hover:text-[#e1c77f]"
