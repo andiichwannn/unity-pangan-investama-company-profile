@@ -10,45 +10,45 @@ const products = [
     name: "Beras",
     variant: "Pandan wangi, premium, medium",
     image: "/beras.jpg",
-    gridPos: { gridColumn: "1 / 3", gridRow: "1" },
+    span: "md:col-span-2 md:col-start-1 md:row-start-1",
   },
   {
     name: "Gula Pasir",
     variant: "Gula kristal putih, kemasan karung dan repack",
     image: "/gula.jpg",
-    gridPos: { gridColumn: "3", gridRow: "1" },
+    span: "md:col-start-3 md:row-start-1",
   },
   {
     name: "Tepung Terigu",
     variant: "Serbaguna & bakery, kemasan 1–25kg",
     image: "/tepung.jpg",
-    gridPos: { gridColumn: "4", gridRow: "1 / 3" },
+    span: "md:col-start-4 md:row-span-2 md:row-start-1",
   },
   {
     name: "Kopi",
     image: "/kopi.jpg",
-    gridPos: { gridColumn: "1", gridRow: "2 / 4" },
+    span: "md:col-start-1 md:row-span-2 md:row-start-2",
   },
   {
     name: "Minyak Goreng Botol",
     image: "/minyak-botol.png",
-    gridPos: { gridColumn: "2", gridRow: "2" },
+    span: "md:col-start-2 md:row-start-2",
   },
   {
     name: "Minyak Goreng Pouch",
     image: "/minyak-pouch.png",
-    gridPos: { gridColumn: "3", gridRow: "2" },
+    span: "md:col-start-3 md:row-start-2",
   },
   {
     name: "Minyak Goreng Curah",
     variant: "DMO & Non-DMO, CP 10 & CP 8",
     image: "/minyak-curah.png",
-    gridPos: { gridColumn: "2", gridRow: "3" },
+    span: "md:col-start-2 md:row-start-3",
   },
   {
     name: "Gas Bumi",
     image: "/gas.jpeg",
-    gridPos: { gridColumn: "3 / 5", gridRow: "3" },
+    span: "md:col-span-2 md:col-start-3 md:row-start-3",
   },
 ];
 
@@ -56,7 +56,7 @@ type Product = {
   name: string;
   variant?: string;
   image: string;
-  gridPos: { gridColumn: string; gridRow: string };
+  span: string;
 };
 
 function useReveal(threshold = 0.15) {
@@ -102,8 +102,8 @@ function ProductCard({
   return (
     <div
       ref={ref}
-      style={{ transitionDelay: `${(index % 4) * 90}ms`, ...item.gridPos }}
-      className={`group relative h-64 overflow-hidden rounded-lg md:h-full ${revealCls(
+      style={{ transitionDelay: `${(index % 4) * 90}ms` }}
+      className={`group relative h-64 overflow-hidden rounded-lg md:h-full ${item.span} ${revealCls(
         inView
       )}`}
     >
@@ -564,7 +564,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 md:grid-rows-[repeat(3,11rem)]">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:grid-rows-[repeat(3,11rem)]">
             {products.map((item, index) => (
               <ProductCard key={item.name} item={item} index={index} />
             ))}
