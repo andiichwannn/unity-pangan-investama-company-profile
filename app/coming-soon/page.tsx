@@ -42,7 +42,7 @@ export default function ComingSoon() {
           </span>
           <br />
           <span className="bg-gradient-to-b from-[#FDE280] via-[#E7C873] to-[#C7A35A] bg-clip-text text-transparent">
-            SOON
+            SOON!!!
           </span>
         </h1>
 

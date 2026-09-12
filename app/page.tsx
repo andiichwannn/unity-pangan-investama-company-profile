@@ -674,7 +674,7 @@ export default function Home() {
 
               <span className="relative text-6xl font-extrabold text-white/10">02</span>
               <div className="relative">
-                <h3 className="text-3xl font-bold text-white">Tanjung Priuk</h3>
+                <h3 className="text-3xl font-bold text-white">Tanjung Priok</h3>
                 <p className="mt-2 text-sm text-white/60">Jakarta Utara</p>
               </div>
             </div>
